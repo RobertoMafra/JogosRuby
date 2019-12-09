@@ -6,13 +6,17 @@ class Livro
   attr_reader :preco
   attr_reader :ano_lancamento
   attr_reader :reimpressao
+  attr_reader :editora
+  attr_reader :tipo
 
   #Construtor
-  def initialize(titulo, preco, ano_lancamento, reimpressao)
+  def initialize(titulo, preco, ano_lancamento, reimpressao, editora, tipo)
     @titulo = titulo
     @ano_lancamento = ano_lancamento
     @reimpressao = reimpressao
     @preco = calcular_preco(preco,reimpressao)
+    @editora = editora
+    @tipo = tipo
   end
 
   #Metodos
@@ -49,27 +53,3 @@ def livro_para_newsletter(livro)
   end
 end
 
-livro_rails = Livro.new("Agile Web Development with Rails", 70,2011, false )
-livro_ruby = Livro.new("Programming Ruby 1.9", 60, 2010, false )
-livro_algoritmo = Livro.new("Algoritmos", 100, 1995, true)
-livro_arquitetura = Livro.new("Introducao a Arquitetura e Design de Software", 100, 1989, false )
-
-estoque = Estoque.new
-estoque.adicionar(livro_rails)
-estoque.adicionar(livro_ruby)
-estoque.adicionar(livro_algoritmo)
-estoque.adicionar(livro_arquitetura)
-estoque.deletar_livros(livro_algoritmo)
-
-puts "Nota Fical: \n"
-imprimir_nota_fiscal(estoque.livros)
-puts "\n\nEstoque: \n"
-estoque.expostar_csv
-
-puts estoque.livros.maximo
-
-puts"\n\nLivros mais baratos que 80 reais: "
-estoque.mais_baratos_que(80)
-
-puts "\n\nNota Fical: \n"
-imprimir_nota_fiscal(estoque.livros)

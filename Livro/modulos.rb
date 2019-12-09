@@ -1,4 +1,4 @@
-module Contador
+module Modulos
   attr_reader :maximo
 
   def <<(livro)

@@ -1,10 +1,12 @@
-require_relative 'contador'
+require_relative 'modulos'
 
 class Estoque
   attr_reader :livros
+  attr_reader :vendas
   def initialize
     @livros = []
-    @livros.extend Contador
+    @vendas = []
+    @livros.extend Modulos
   end
 
   def total_livros
@@ -31,8 +33,26 @@ class Estoque
     end
   end
 
-  def deletar_livros(livro)
-    @livros.delete(livro)
+  def vender(livro)
+    @livros.delete livro
+    @vendas << livro
+  end
+
+  def quantidade_de_vendas_por(produto, &campo)
+    @vendas.count { |venda| campo.call(venda) == campo.call(produto) }
+  end
+
+  def que_mais_vendeu_por(tipo, &campo)
+    @vendas.select { | l | l.tipo == tipo}.sort {|v1,v2|
+      quantidade_de_vendas_por(v1, &:titulo) <=> quantidade_de_vendas_por(v2, &:titulo)}.last
+  end
+
+  def livro_que_mais_vendeu_por(&campo)
+    que_mais_vendeu_por("livro", &campo)
+  end
+
+  def revista_que_mais_vendeu_por(&campo)
+    que_mais_vendeu_por("revista", &campo)
   end
 
   def maximo
