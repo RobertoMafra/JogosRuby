@@ -29,6 +29,10 @@ class Livro
         preco
     end
   end
+
+  def to_csv
+    puts "#{@titulo}, #{@ano_lancamento}"
+  end
 end
 
 def imprimir_nota_fiscal(livros)
@@ -45,30 +49,27 @@ def livro_para_newsletter(livro)
   end
 end
 
-def mais_baratos_que(valor, estoque)
-  livros = []
-  estoque.each do |livro|
-    if livro.preco <= valor
-      puts "#{livro.titulo}, #{livro.ano_lancamento} - preço: R$ #{livro.preco}"
-    end
-  end
-end
-
 livro_rails = Livro.new("Agile Web Development with Rails", 70,2011, false )
 livro_ruby = Livro.new("Programming Ruby 1.9", 60, 2010, false )
 livro_algoritmo = Livro.new("Algoritmos", 100, 1995, true)
 livro_arquitetura = Livro.new("Introducao a Arquitetura e Design de Software", 100, 1989, false )
 
 estoque = Estoque.new
-estoque.livros << livro_rails
-estoque.livros << livro_ruby
-estoque.livros << livro_algoritmo
-estoque.livros << livro_arquitetura
+estoque.adicionar(livro_rails)
+estoque.adicionar(livro_ruby)
+estoque.adicionar(livro_algoritmo)
+estoque.adicionar(livro_arquitetura)
+estoque.deletar_livros(livro_algoritmo)
 
 puts "Nota Fical: \n"
 imprimir_nota_fiscal(estoque.livros)
 puts "\n\nEstoque: \n"
 estoque.expostar_csv
 
+puts estoque.livros.maximo
+
 puts"\n\nLivros mais baratos que 80 reais: "
-mais_baratos_que(80, estoque.livros)
+estoque.mais_baratos_que(80)
+
+puts "\n\nNota Fical: \n"
+imprimir_nota_fiscal(estoque.livros)
