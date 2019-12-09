@@ -93,11 +93,21 @@ def perdeu_o_jogo?(mapa)
 end
 
 def pegar_bomba(mapa, posicao, quantidade)
-  if quantidade > 0
-    posicao = posicao.direita
-    posicao.remover_do_mapa(mapa)
-    pegar_bomba(mapa,posicao,quantidade - 1)
+  if quantidade == 0
+    return
   end
+  executar_remocao(mapa, posicao.direita, quantidade)
+  executar_remocao(mapa, posicao.esquerda, quantidade)
+  executar_remocao(mapa, posicao.cima, quantidade)
+  executar_remocao(mapa, posicao.baixo, quantidade)
+end
+
+def executar_remocao(mapa, posicao, quantidade)
+  if mapa[posicao.linha][posicao.coluna] == nil || mapa[posicao.linha][posicao.coluna] == "X"
+    return
+  end
+  posicao.remover_do_mapa(mapa)
+  pegar_bomba(mapa,posicao,quantidade - 1)
 end
 
 def jogar(nome)

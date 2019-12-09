@@ -1,4 +1,4 @@
-require_relative 'ui'
+require_relative '../rb'
 require_relative 'rank'
 
 def escolher_palavra_secreta

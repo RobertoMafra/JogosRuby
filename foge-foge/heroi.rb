@@ -35,4 +35,17 @@ class Heroi
   def direita
     movimentar_heroi("D")
   end
+
+  def esquerda
+    movimentar_heroi("A")
+  end
+  
+  def cima
+    movimentar_heroi("W")
+  end
+
+  def baixo
+    movimentar_heroi("S")
+  end
+
 end
